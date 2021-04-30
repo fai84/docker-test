@@ -1,0 +1,20 @@
+version: '3'
+services:
+    frontend:
+        restart: unless-stopped
+        image: staticfloat/nginx-certbot
+        ports:
+            - 1180:80/tcp
+            - 18443:443/tcp
+        environment:
+            CERTBOT_EMAIL: laikafai84@gmail.com
+            # variable names are space-separated
+            ENVSUBST_VARS: FQDN
+            FQDN: laikafai84.mynetgear.com
+        volumes:
+          - ./conf.d:/etc/nginx/user.conf.d:ro
+          - letsencrypt:/etc/letsencrypt
+		  - "/etc/localtime:/etc/localtime:ro"
+		  - "/etc/timezone:/etc/timezone:ro"
+volumes:
+    letsencrypt:
